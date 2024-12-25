@@ -1,0 +1,131 @@
+using System;
+using Npgsql;
+
+class Program
+{
+    static void Main()
+    {
+        // Koppla till databasen
+        string connectionString = "Host=localhost;Username=postgres;Password=yourpassword;Database=postgres";
+        using var connection = new NpgsqlConnection(connectionString);
+        connection.Open();
+
+        // Registrera eller logga in användare
+        Console.Write("Ange ditt namn: ");
+        string playerName = Console.ReadLine();
+
+        string findUserQuery = "SELECT UserId, TotalScore FROM Users WHERE Name = @Name;";
+        using var findUserCommand = new NpgsqlCommand(findUserQuery, connection);
+        findUserCommand.Parameters.AddWithValue("Name", playerName);
+        using var userReader = findUserCommand.ExecuteReader();
+
+        int userId;
+        int totalScore;
+
+        if (userReader.Read())
+        {
+            // Användaren finns redan
+            userId = userReader.GetInt32(0);
+            totalScore = userReader.GetInt32(1);
+            Console.WriteLine($"Välkommen tillbaka, {playerName}! Din totala poäng är: {totalScore}");
+        }
+        else
+        {
+            // Användaren finns inte, skapa ny
+            userReader.Close(); // Stäng tidigare reader
+            string createUserQuery = "INSERT INTO Users (Name) VALUES (@Name) RETURNING UserId;";
+            using var createUserCommand = new NpgsqlCommand(createUserQuery, connection);
+            createUserCommand.Parameters.AddWithValue("Name", playerName);
+            userId = (int)createUserCommand.ExecuteScalar();
+            totalScore = 0;
+            Console.WriteLine($"Välkommen, {playerName}! Du är nu registrerad.");
+        }
+        userReader.Close();
+
+        // Välj kategori
+        string fetchCategoriesQuery = "SELECT DISTINCT Category FROM Questions;";
+        using var fetchCategoriesCommand = new NpgsqlCommand(fetchCategoriesQuery, connection);
+        using var categoriesReader = fetchCategoriesCommand.ExecuteReader();
+
+        Console.WriteLine("Välj en kategori:");
+        int index = 1;
+        var categories = new List<string>();
+
+        while (categoriesReader.Read())
+        {
+            string category = categoriesReader.GetString(0);
+            categories.Add(category);
+            Console.WriteLine($"{index}. {category}");
+            index++;
+        }
+        categoriesReader.Close();
+
+        Console.Write("Ange nummer för din kategori: ");
+        int categoryChoice;
+        while (!int.TryParse(Console.ReadLine(), out categoryChoice) || categoryChoice < 1 || categoryChoice > categories.Count)
+        {
+            Console.WriteLine("Ogiltigt val, försök igen.");
+            Console.Write("Ange nummer för din kategori: ");
+        }
+
+        string chosenCategory = categories[categoryChoice - 1];
+        Console.WriteLine($"\nDu valde kategorin: {chosenCategory}");
+
+        // Hämta frågor för vald kategori
+        string fetchQuestionsQuery = "SELECT QuestionId, QuestionText, CorrectAnswer, Alternatives FROM Questions WHERE Category = @Category;";
+        using var fetchQuestionsCommand = new NpgsqlCommand(fetchQuestionsQuery, connection);
+        fetchQuestionsCommand.Parameters.AddWithValue("Category", chosenCategory);
+        using var reader = fetchQuestionsCommand.ExecuteReader();
+
+        int score = 0;
+
+        while (reader.Read())
+        {
+            int questionId = reader.GetInt32(0);
+            string questionText = reader.GetString(1);
+            string correctAnswer = reader.GetString(2);
+            string[] alternatives = reader.GetString(3).Split(',');
+
+            // Visa frågan och alternativen
+            Console.WriteLine($"\nFråga: {questionText}");
+            for (int i = 0; i < alternatives.Length; i++)
+            {
+                Console.WriteLine($"{i + 1}. {alternatives[i]}");
+            }
+
+            // Låt spelaren välja ett alternativ
+            Console.Write("Välj ett alternativ (1-4): ");
+            int answerChoice;
+            while (!int.TryParse(Console.ReadLine(), out answerChoice) || answerChoice < 1 || answerChoice > alternatives.Length)
+            {
+                Console.WriteLine("Ogiltigt val, försök igen.");
+                Console.Write("Välj ett alternativ (1-4): ");
+            }
+
+            string userAnswer = alternatives[answerChoice - 1];
+
+            // Kontrollera om svaret är rätt
+            if (userAnswer.Trim().ToLower() == correctAnswer.Trim().ToLower())
+            {
+                Console.WriteLine("Rätt svar!");
+                score++;
+            }
+            else
+            {
+                Console.WriteLine($"Fel! Rätt svar är: {correctAnswer}");
+            }
+        }
+        reader.Close();
+
+        // Uppdatera spelarens poäng
+        totalScore += score;
+        string updateScoreQuery = "UPDATE Users SET TotalScore = @TotalScore WHERE UserId = @UserId;";
+        using var updateCommand = new NpgsqlCommand(updateScoreQuery, connection);
+        updateCommand.Parameters.AddWithValue("TotalScore", totalScore);
+        updateCommand.Parameters.AddWithValue("UserId", userId);
+        updateCommand.ExecuteNonQuery();
+
+        Console.WriteLine($"\nTack för att du spelade, {playerName}! Din slutpoäng för denna omgång är: {score}");
+        Console.WriteLine($"Din totala poäng är nu: {totalScore}");
+    }
+}
