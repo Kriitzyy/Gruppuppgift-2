@@ -1,3 +1,3 @@
 using System; 
-using Npgsqlpgsql;
+using Npgsql;
 // Databas fil som kommer att utvecklas 
