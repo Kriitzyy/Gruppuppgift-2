@@ -1,56 +1,53 @@
-﻿using System; 
+﻿using System;
 
-namespace ApplicationClass {
+namespace QuizApp
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.BackgroundColor = ConsoleColor.Cyan;
+            Console.ForegroundColor = ConsoleColor.Black;
+            bool StillGoing = true;
+            int MenuChoice;
 
-class Program {
-    // .gitignore filen finns, men mer behövs kompletteras för fullfungerande.
-    List<string> QuizQuestions = new List<string>(); // Lista för att spara Frågor? 
-    static void Main(string[] args) {
+            while (StillGoing)
+            {
+                Console.Clear();
+                ShowMenu.ShowHomePage(); //Quiz-app logo
+                ShowMenu.DisplayMenu(); // Menu val, (Finns i ShowMenu)
 
-       bool StillGoing = true; 
-       int MenuChoice; 
+                string userinput = Console.ReadLine();
 
-       while (StillGoing) {
+                if (int.TryParse(userinput, out MenuChoice))
+                { // Error handling och Konvert
+                    switch (MenuChoice)
+                    {
+                        case 1:
 
-        ShowMenu.DisplayMenuName1(); // Menu val, (Finns i ShowMenu)
+                            SignManager.SignUp(); // Metod 1 för innehåll
+                            break;
 
-        string UserInput = Console.ReadLine()!.ToLower();
+                        case 2:
+                            SignManager.SignIn(); // Metod 2 för innehåll
 
-        if (int.TryParse(UserInput, out MenuChoice)) { // Error handling och Konvert
+                            break;
 
-            switch(MenuChoice) {
+                        case 3:
+                            Console.WriteLine("Exiting...");
+                            StillGoing = false;
+                            break;
 
-                case 1:
-
-                ApplicationFunctions.FunctionName1(); // Metod 1 för innehåll
-                break;
-
-                case 2:
-                ApplicationFunctions.FunctionName2(); // Metod 2 för innehåll
-
-                break;
-                ApplicationFunctions.FunctionName3(); // Metod 3 för innehåll
-
-                case 3: 
-                ApplicationFunctions.FunctionName4();// Metod 4 för innehåll
-                break;
-
-                case 4:
-                Console.WriteLine("Exiting...");
-                StillGoing = false;
-                break;
-
-                default: 
-                Console.WriteLine("Ensure choosing the correct number!");
-                break; 
-
-
+                        default:
+                            Console.WriteLine("Ensure choosing the correct number!");
+                            break;
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Ensure choosing from 1-3!");
+                }
             }
         }
-        else {
-            Console.WriteLine("Ensure choosing from 1-4!");
-        }
-       }
     }
-  }
 }

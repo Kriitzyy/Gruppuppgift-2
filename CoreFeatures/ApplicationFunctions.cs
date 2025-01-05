@@ -1,4 +1,4 @@
-namespace ApplicationClass {
+namespace QuizApp {
 
     public class ApplicationFunctions { 
 

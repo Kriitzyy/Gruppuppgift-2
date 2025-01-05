@@ -1,6 +1,6 @@
 using System; 
 
-namespace ApplicationClass  {
+namespace QuizApp  {
 
     public class QuizClass { // Quiz class 
         public string Question { get; set; } // Fråga egenskap? 

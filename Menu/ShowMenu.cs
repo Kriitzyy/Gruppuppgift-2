@@ -1,30 +1,46 @@
 // Här sparas Menyer då vi kanske kommer ha många olika/upprepande menyer
-// Och så att det blir strukturerat 
-using System; 
+// Och så att det blir strukturerat
+using System;
 
-namespace ApplicationClass {
+namespace QuizApp
+{
+    public static class ShowMenu
+    {
+        public static void DisplayMenu() //Metod för att visa meny-alternativ.
+        {
+            Console.WriteLine("\n[1] - Sign up");
+            Console.WriteLine("[2] - Sign in");
+            Console.WriteLine("[3] - Exit");
 
-    public class ShowMenu {
-
-        public static void DisplayMenuName1() {
-
-        Console.WriteLine("Welcome message");
-
-        Console.WriteLine("\n[1] - Option 1 ");
-        Console.WriteLine("[2] - Option 2");
-        Console.WriteLine("[3] - Option 3");
-        Console.WriteLine("[4] - Exit? ");
-
+            Console.Write("\nSelect an option: ");
         }
-         public static void DisplayMenuName2() {
-
-            // Innehåll
-
+        static void center(string message) //Metod för att justera 'Quiz-App' logo position.
+    {
+        int screenWidth = Console.WindowWidth;
+        int stringWidth = message.Length;
+        int spaces = (screenWidth / 2) + (stringWidth / 2);
+        Console.WriteLine(message.PadLeft(spaces));
+    }
+        public static void ShowHomePage() { //Metod för att visa Quiz-App logo och text.
+             Console.WriteLine(@"   
+                                                    ============================================================================================  
+                                                    =                                                                                          =
+                                                    =    ████████▄   ███    █▄   ▄█   ▄███████▄          ▄████████    ▄███████▄    ▄███████▄   =
+                                                    =    ███    ███  ███    ███ ███  ██▀     ▄██        ███    ███   ███    ███   ███    ███   =
+                                                    =    ███    ███  ███    ███ ███▌       ▄███▀        ███    ███   ███    ███   ███    ███   =
+                                                    =    ███    ███  ███    ███ ███▌  ▀█▀▄███▀▄▄        ███    ███   ███    ███   ███    ███   =
+                                                    =    ███    ███  ███    ███ ███▌   ▄███▀   ▀      ▀███████████ ▀█████████▀  ▀█████████▀    =
+                                                    =    ███    ███  ███    ███ ███  ▄███▀              ███    ███   ███          ███          =
+                                                    =    ███  ▀ ███  ███    ███ ███  ███▄     ▄█        ███    ███   ███          ███          =
+                                                    =    ▀██████▀▄█ ████████▀  █▀    ▀████████▀        ███    █▀   ▄████▀       ▄████▀         =
+                                                    =                                                                                          =
+                                                    ============================================================================================                               
+   ");
+        center("🎮 WELCOME TO THE QUIZ APP 🎮\n");
+        center("Think you're the ultimate brainiac? Or maybe you’re just here to prove you're smarter than your friends?");
+        center("Either way, welcome to the *Quiz App*—where knowledge is your weapon, and trivia mastery is your ultimate flex! 🧠⚔️");
+        center("💡 **Ready to show the world who's boss? Let’s go!**");
         }
-         public static void DisplayMenuName3() {
 
-            // Innehåll
-
-        }
     }
 }
