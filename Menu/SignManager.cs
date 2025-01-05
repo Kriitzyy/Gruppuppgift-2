@@ -1,4 +1,5 @@
 using Npgsql;
+
 namespace QuizApp
 {
     public static class SignManager // Klass som hanterar inlogg och registrering
