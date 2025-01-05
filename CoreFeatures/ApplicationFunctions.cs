@@ -1,4 +1,4 @@
-using npgsql;
+using Npgsql;
 namespace QuizApp
  {
 
