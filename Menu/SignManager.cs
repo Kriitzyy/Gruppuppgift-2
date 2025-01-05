@@ -1,8 +1,13 @@
 using Npgsql;
+
+
 namespace QuizApp
 {
     public static class SignManager // Klass som hanterar inlogg och registrering
     {
+        // Till Lorik, ändra connection stringen till databas.
+        private static readonly string connectionString = "Host=localhost;Username=myuser;Password=mypassword;Database=quizapp";
+
         public static void SignUp()
         {
             Console.Clear();
