@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Data;
+using Npgsql;
 
 namespace QuizApp
 {

@@ -150,12 +150,9 @@ namespace QuizApp
             switch (choice)
             {
                 case "1":
-                    PlayQuiz(userId);
+                    ApplicationFunctions.PlayQuiz(userId);
                     break;
                 case "2":
-                    EditProfile(userId);
-                    break;
-                case "3":
                     return;
                 default:
                     Console.WriteLine("Invalid choice! Press Enter to try again.");
