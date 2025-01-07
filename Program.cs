@@ -1,11 +1,16 @@
 ﻿using System;
 
+// Koden är i git stash
 namespace QuizApp
 {
     class Program
     {
         static void Main(string[] args)
         {
+
+            DatabaseHelper.TestConnection();
+
+            /* 
             Console.BackgroundColor = ConsoleColor.Cyan;
             Console.ForegroundColor = ConsoleColor.Black;
             bool StillGoing = true;
@@ -48,6 +53,7 @@ namespace QuizApp
                     Console.WriteLine("Ensure choosing from 1-3!");
                 }
             }
+            */
         }
     }
 }

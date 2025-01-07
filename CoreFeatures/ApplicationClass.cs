@@ -1,19 +1,22 @@
 using System; 
+using QuizApp; // Tillgång till inehållet i ApplicationClass
 
-namespace QuizApp  {
+public class QuizClass
+{
+    public string Question { get; set; } // Fråga egenskap
+    public string OptionA { get; set; } // Alternativ A
+    public string OptionB { get; set; } // Alternativ B
+    public string OptionC { get; set; } // Alternativ C
+    public string OptionD { get; set; } // Alternativ D
+    public string CorrectOption { get; set; } // Rätt svar
 
-    public class QuizClass { // Quiz class 
-        public string Question { get; set; } // Fråga egenskap? 
-        public int Points { get; set; } // Poäng egenskap?
-        public string Option { get; set; } // Val egenskap? 
-
-
-         public QuizClass(string Question, int Points, string Option)
-        {
-            Question = Question;
-            Points = Points;
-            Option = Option;
-            
-        }
+    public QuizClass(string question, string optionA, string optionB, string optionC, string optionD, string correctOption)
+    {
+        Question = question;
+        OptionA = optionA;
+        OptionB = optionB;
+        OptionC = optionC;
+        OptionD = optionD;
+        CorrectOption = correctOption;
     }
 }

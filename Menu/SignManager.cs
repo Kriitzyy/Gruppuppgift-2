@@ -1,4 +1,5 @@
 using Npgsql;
+using System;
 
 namespace QuizApp
 {
@@ -99,7 +100,7 @@ namespace QuizApp
                 try
                 {
                     connection.Open();
-                    var command = new NpgsqlCommand("SELECT id, best_score FROM users WHERE username = @username AND password = @password", connection);
+                    var command = new NpgsqlCommand("SELECT id, username, best_score FROM users WHERE username = @username", connection);
                     command.Parameters.AddWithValue("username", username);
 
                     using (var reader = command.ExecuteReader())
@@ -107,9 +108,11 @@ namespace QuizApp
                         if (reader.Read())
                         {
                             int userId = reader.GetInt32(0);
-                            int bestScore = reader.GetInt32(1);
+                            string userName = reader.GetString(1);
+                            int bestScore = reader.GetInt32(2);
 
-                            ShowUserMenu(userId, username, bestScore);
+                            User user = new User(userId, userName, bestScore);
+                            ShowUserMenu(user);
                         }
                         else
                         {
@@ -124,13 +127,14 @@ namespace QuizApp
                 }
             }
         }
-         static void ShowUserMenu(int userId, string username, int bestScore)
-    {
-        while (true)
-        {
-            Console.Clear();
 
-            Console.WriteLine(@"
+        static void ShowUserMenu(User user)
+        {
+            while (true)
+            {
+                Console.Clear();
+
+                Console.WriteLine(@"
                                                                      
  __ __  ______ ___________    _____   ____   ____  __ __ 
 |  |  \/  ___// __ \_  __ \  /     \_/ __ \ /    \|  |  \
@@ -139,14 +143,15 @@ namespace QuizApp
            \/     \/              \/     \/     \/       
             ");
 
-            Console.WriteLine($"Welcome, {username}! Your Best Score: {bestScore}");
-            Console.WriteLine("\n1. Play Quiz");
-            Console.WriteLine("2. Edit Profile");
-            Console.WriteLine("3. Log Out");
+                Console.WriteLine($"Welcome, {user.Username}! Your Best Score: {user.BestScore}");
+                Console.WriteLine("\n1. Play Quiz");
+                Console.WriteLine("2. Edit Profile");
+                Console.WriteLine("3. Log Out");
 
-            Console.Write("\nSelect an option: ");
-            string choice = Console.ReadLine();
+                Console.Write("\nSelect an option: ");
+                string choice = Console.ReadLine();
 
+<<<<<<< Updated upstream
             switch (choice)
             {
                 case "1":
@@ -161,8 +166,22 @@ namespace QuizApp
                     Console.WriteLine("Invalid choice! Press Enter to try again.");
                     Console.ReadLine();
                     break;
+=======
+                switch (choice)
+                {
+                    case "1":
+                        ApplicationFunctions.PlayQuiz(user);
+                        break;
+                    case "2":
+                        // Här kan du lägga till funktionalitet för att ändra profil.
+                        break;
+                    default:
+                        Console.WriteLine("Invalid choice! Press Enter to try again.");
+                        Console.ReadLine();
+                        break;
+                }
+>>>>>>> Stashed changes
             }
-        }
-    }  
+        }  
     }
 }

@@ -1,5 +1,3 @@
-// Här sparas Menyer då vi kanske kommer ha många olika/upprepande menyer
-// Och så att det blir strukturerat
 using System;
 
 namespace QuizApp
@@ -14,15 +12,18 @@ namespace QuizApp
 
             Console.Write("\nSelect an option: ");
         }
-        static void center(string message) //Metod för att justera 'Quiz-App' logo position.
-    {
-        int screenWidth = Console.WindowWidth;
-        int stringWidth = message.Length;
-        int spaces = (screenWidth / 2) + (stringWidth / 2);
-        Console.WriteLine(message.PadLeft(spaces));
-    }
-        public static void ShowHomePage() { //Metod för att visa Quiz-App logo och text.
-             Console.WriteLine(@"   
+
+        static void Center(string message) //Metod för att justera 'Quiz-App' logo position.
+        {
+            int screenWidth = Console.WindowWidth;
+            int stringWidth = message.Length;
+            int spaces = (screenWidth / 2) + (stringWidth / 2);
+            Console.WriteLine(message.PadLeft(spaces));
+        }
+
+        public static void ShowHomePage() //Metod för att visa Quiz-App logo och text.
+        {             
+            Console.WriteLine(@"   
                                                     ============================================================================================  
                                                     =                                                                                          =
                                                     =    ████████▄   ███    █▄   ▄█   ▄███████▄          ▄████████    ▄███████▄    ▄███████▄   =
@@ -36,11 +37,10 @@ namespace QuizApp
                                                     =                                                                                          =
                                                     ============================================================================================                               
    ");
-        center("🎮 WELCOME TO THE QUIZ APP 🎮\n");
-        center("Think you're the ultimate brainiac? Or maybe you’re just here to prove you're smarter than your friends?");
-        center("Either way, welcome to the *Quiz App*—where knowledge is your weapon, and trivia mastery is your ultimate flex! 🧠⚔️");
-        center("💡 **Ready to show the world who's boss? Let’s go!**");
+            Center("🎮 WELCOME TO THE QUIZ APP 🎮\n");
+            Center("Think you're the ultimate brainiac? Or maybe you’re just here to prove you're smarter than your friends?");
+            Center("Either way, welcome to the *Quiz App*—where knowledge is your weapon, and trivia mastery is your ultimate flex! 🧠⚔️");
+            Center("💡 **Ready to show the world who's boss? Let’s go!**");
         }
-
     }
 }
