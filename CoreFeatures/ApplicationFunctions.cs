@@ -2,18 +2,16 @@ using System;
 using System.Data;
 using Npgsql;
 
-
 namespace QuizApp
 {
     public static class ApplicationFunctions
     {
-        
         public static void PlayQuiz(int userid)
         {
             Console.Clear();
             Console.WriteLine("=== Choose a Category ===");
 
-            using (var connection = new NpgsqlConnection(connectionString))
+            using (var connection = DataBaseConnection.GetConnection())
             {
                 connection.Open();
                 var command = new NpgsqlCommand("SELECT id, name FROM categories", connection);
@@ -40,12 +38,13 @@ namespace QuizApp
 
             int score = 0;
 
-            using (var connection = new NpgsqlConnection(connectionString))
+            using (var connection = DataBaseConnection.GetConnection())
             {
                 connection.Open();
                 var command = new NpgsqlCommand(
                     "SELECT question, option_a, option_b, option_c, option_d, correct_option FROM questions WHERE category_id = @categoryId LIMIT 15",
-                    connection);
+                    connection
+                );
                 command.Parameters.AddWithValue("categoryId", categoryId);
 
                 using (var reader = command.ExecuteReader())
@@ -99,12 +98,13 @@ namespace QuizApp
 
         public static void UpdateBestScore(int userId, int score)
         {
-            using (var connection = new NpgsqlConnection(connectionString))
+            using (var connection = DataBaseConnection.GetConnection())
             {
                 connection.Open();
                 var command = new NpgsqlCommand(
                     "UPDATE users SET best_score = GREATEST(best_score, @score) WHERE id = @userId",
-                    connection);
+                    connection
+                );
                 command.Parameters.AddWithValue("score", score);
                 command.Parameters.AddWithValue("userId", userId);
 
@@ -112,9 +112,35 @@ namespace QuizApp
             }
         }
 
-        public static void FunctionName4()
+        public static void EditProfile(int userId)
         {
-            // Innehåll
+            Console.Clear();
+            Console.WriteLine("=== Edit Username ===");
+
+            Console.Write("Enter new username: ");
+            string newUsername = Console.ReadLine();
+
+            using (var connection = DataBaseConnection.GetConnection())
+            {
+                connection.Open();
+                var command = new NpgsqlCommand(
+                    "UPDATE users SET username = @username WHERE id = @userId",
+                    connection
+                );
+                command.Parameters.AddWithValue("username", newUsername);
+                command.Parameters.AddWithValue("userId", userId);
+
+                try
+                {
+                    command.ExecuteNonQuery();
+                    Console.WriteLine("Username updated successfully! Press Enter to continue.");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error: {ex.Message}");
+                }
+                Console.ReadLine();
+            }
         }
     }
 }

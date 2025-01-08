@@ -8,6 +8,7 @@ namespace QuizApp
     {
         public static void DisplayMenu() //Metod för att visa meny-alternativ.
         {
+            ShowHomePage();
             Console.WriteLine("\n[1] - Sign up");
             Console.WriteLine("[2] - Sign in");
             Console.WriteLine("[3] - Exit");

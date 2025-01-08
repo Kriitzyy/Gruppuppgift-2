@@ -4,14 +4,12 @@ namespace QuizApp
 {
     public static class SignManager // Klass som hanterar inlogg och registrering
     {
-        // Till Lorik, ändra connection stringen till databas.
-        private static readonly string connectionString = "Host=localhost;Username=myuser;Password=mypassword;Database=quizapp";
-
         public static void SignUp()
         {
             Console.Clear();
 
-            Console.WriteLine(@"
+            Console.WriteLine(
+                @"
    _____ _               _    _       
   / ____(_)             | |  | |      
  | (___  _  __ _ _ __   | |  | |_ __  
@@ -20,7 +18,8 @@ namespace QuizApp
  |_____/|_|\__, |_| |_|  \____/| .__/ 
             __/ |              | |    
            |___/               |_|    
-            ");
+            "
+            );
 
             string username;
 
@@ -42,12 +41,15 @@ namespace QuizApp
                 break;
             }
 
-            using (var connection = new NpgsqlConnection(connectionString))
+            using (var connection = DataBaseConnection.GetConnection())
             {
                 try
                 {
                     connection.Open();
-                    var command = new NpgsqlCommand("INSERT INTO users (username) VALUES (@username)", connection);
+                    var command = new NpgsqlCommand(
+                        "INSERT INTO users (username) VALUES (@username)",
+                        connection
+                    );
                     command.Parameters.AddWithValue("username", username);
 
                     command.ExecuteNonQuery();
@@ -68,7 +70,8 @@ namespace QuizApp
         {
             Console.Clear();
 
-            Console.WriteLine(@"
+            Console.WriteLine(
+                @"
    _____ _               _____       
   / ____(_)             |_   _|      
  | (___  _  __ _ _ __     | |  _ __  
@@ -77,7 +80,8 @@ namespace QuizApp
  |_____/|_|\__, |_| |_| |_____|_| |_|
             __/ |                    
            |___/                     
-            ");
+            "
+            );
 
             string username;
 
@@ -94,12 +98,15 @@ namespace QuizApp
                 break;
             }
 
-            using (var connection = new NpgsqlConnection(connectionString))
+            using (var connection = DataBaseConnection.GetConnection())
             {
                 try
                 {
                     connection.Open();
-                    var command = new NpgsqlCommand("SELECT id, best_score FROM users WHERE username = @username AND password = @password", connection);
+                    var command = new NpgsqlCommand(
+                        "SELECT id, best_score FROM users WHERE username = @username ",
+                        connection
+                    );
                     command.Parameters.AddWithValue("username", username);
 
                     using (var reader = command.ExecuteReader())
@@ -124,42 +131,48 @@ namespace QuizApp
                 }
             }
         }
-         static void ShowUserMenu(int userId, string username, int bestScore)
-    {
-        while (true)
-        {
-            Console.Clear();
 
-            Console.WriteLine(@"
+        public static void ShowUserMenu(int userId, string username, int bestScore)
+        {
+            while (true)
+            {
+                Console.Clear();
+
+                Console.WriteLine(
+                    @"
                                                                      
  __ __  ______ ___________    _____   ____   ____  __ __ 
 |  |  \/  ___// __ \_  __ \  /     \_/ __ \ /    \|  |  \
 |  |  /\___ \\  ___/|  | \/ |  Y Y  \  ___/|   |  \  |  /
 |____//____  >\___  >__|    |__|_|  /\___  >___|  /____/ 
            \/     \/              \/     \/     \/       
-            ");
+            "
+                );
 
-            Console.WriteLine($"Welcome, {username}! Your Best Score: {bestScore}");
-            Console.WriteLine("\n1. Play Quiz");
-            Console.WriteLine("2. Edit Profile");
-            Console.WriteLine("3. Log Out");
+                Console.WriteLine($"Welcome, {username}! Your Best Score: {bestScore}");
+                Console.WriteLine("\n1. Play Quiz");
+                Console.WriteLine("2. Edit Profile");
+                Console.WriteLine("3. Log Out");
 
-            Console.Write("\nSelect an option: ");
-            string choice = Console.ReadLine();
+                Console.Write("\nSelect an option: ");
+                string choice = Console.ReadLine();
 
-            switch (choice)
-            {
-                case "1":
-                    ApplicationFunctions.PlayQuiz(userId);
-                    break;
-                case "2":
-                    return;
-                default:
-                    Console.WriteLine("Invalid choice! Press Enter to try again.");
-                    Console.ReadLine();
-                    break;
+                switch (choice)
+                {
+                    case "1":
+                        ApplicationFunctions.PlayQuiz(userId);
+                        break;
+                    case "2":
+                        ApplicationFunctions.EditProfile(userId);
+                        break;
+                    case "3":
+                        return;
+                    default:
+                        Console.WriteLine("Invalid choice! Press Enter to try again.");
+                        Console.ReadLine();
+                        break;
+                }
             }
         }
-    }  
     }
 }

@@ -10,14 +10,14 @@ namespace QuizApp
         {
             Console.BackgroundColor = ConsoleColor.Cyan;
             Console.ForegroundColor = ConsoleColor.Black;
+            LoadQuizapp.SetUpDatabase();
             bool StillGoing = true;
             int MenuChoice;
 
             while (StillGoing)
             {
                 Console.Clear();
-                ShowMenu.ShowHomePage(); //Quiz-app logo
-                ShowMenu.DisplayMenu(); // Menu val, (Finns i ShowMenu)
+                ShowMenu.DisplayMenu(); //Quiz-app logo
 
                 string userinput = Console.ReadLine();
 
@@ -32,7 +32,6 @@ namespace QuizApp
 
                         case 2:
                             SignManager.SignIn(); // Metod 2 för innehåll
-
                             break;
 
                         case 3:
