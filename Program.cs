@@ -13,7 +13,7 @@ namespace QuizApp
             LoadQuizapp.SetUpDatabase();
             bool StillGoing = true;
             int MenuChoice;
-
+            
             while (StillGoing)
             {
                 Console.Clear();
@@ -26,7 +26,6 @@ namespace QuizApp
                     switch (MenuChoice)
                     {
                         case 1:
-
                             SignManager.SignUp(); // Metod 1 för innehåll
                             break;
 

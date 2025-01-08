@@ -1,3 +1,4 @@
+using System; 
 using Npgsql;
 using QuizApp;
 
@@ -83,7 +84,10 @@ public class LoadQuizapp
                 ('General Knowledge'),
                 ('Science'),
                 ('Math'),
-                ('History')
+                ('History'),
+                ('Spel'),
+                ('Programmering'),
+                ('Filmer')
                 ON CONFLICT DO NOTHING;
             ";
 
@@ -96,30 +100,24 @@ public class LoadQuizapp
                 // Insert Questions
                 string insertQuestions = @"
                 INSERT INTO questions (category_id, question, option_a, option_b, option_c, option_d, correct_option) VALUES
-                -- General Knowledge (Category 1)
-                (1, 'What is the capital of France?', 'Paris', 'London', 'Berlin', 'Madrid', 'A'),
-                (1, 'Who wrote ""Hamlet""?', 'Shakespeare', 'Dickens', 'Hemingway', 'Tolkien', 'A'),
-                (1, 'What is the boiling point of water?', '100°C', '90°C', '110°C', '80°C', 'A'),
-                (1, 'Who painted the Mona Lisa?', 'Van Gogh', 'Picasso', 'Da Vinci', 'Rembrandt', 'C'),
-                (1, 'Which gas do plants absorb from the atmosphere?', 'Oxygen', 'Carbon Dioxide', 'Nitrogen', 'Hydrogen', 'B'),
-                -- Science (Category 2)
-                (2, 'Who discovered penicillin?', 'Newton', 'Edison', 'Fleming', 'Darwin', 'C'),
-                (2, 'What is the chemical symbol for gold?', 'Au', 'Ag', 'Go', 'Gd', 'A'),
-                (2, 'What is the hardest natural substance on Earth?', 'Iron', 'Diamond', 'Gold', 'Quartz', 'B'),
-                (2, 'What is the speed of light?', '300,000 km/s', '150,000 km/s', '450,000 km/s', '200,000 km/s', 'A'),
-                (2, 'What is H2O commonly known as?', 'Oxygen', 'Water', 'Hydrogen', 'Salt', 'B'),
-                -- Math (Category 3)
-                (3, 'What is 5 + 7?', '10', '11', '12', '13', 'C'),
-                (3, 'What is the square root of 64?', '6', '7', '8', '9', 'C'),
-                (3, 'Solve: 9 x 9', '80', '81', '90', '91', 'B'),
-                (3, 'What is the value of pi (approx)?', '3.12', '3.14', '3.16', '3.18', 'B'),
-                (3, 'Which is the first prime number?', '1', '2', '3', '5', 'B'),
-                -- History (Category 4)
-                (4, 'What year did World War II end?', '1944', '1945', '1946', '1947', 'B'),
-                (4, 'Who was the first President of the United States?', 'Jefferson', 'Lincoln', 'Washington', 'Adams', 'C'),
-                (4, 'Where was Napoleon Bonaparte born?', 'France', 'Corsica', 'Italy', 'Spain', 'B'),
-                (4, 'Who was the British Prime Minister during WWII?', 'Churchill', 'Chamberlain', 'Eden', 'Macmillan', 'A'),
-                (4, 'What ancient civilization built the pyramids?', 'Romans', 'Greeks', 'Egyptians', 'Persians', 'C')
+                -- Spel (Category 5)
+                (5, 'Vilken färg har Mario på sina skor?', 'Svart', 'Grå', 'Brun', 'Blå', 'C'),
+                (5, 'Vilket djur är Sonic?', 'Mus', 'Kanin', 'Katt', 'Igelkott', 'D'),
+                (5, 'Vilket spel är John Cena med i?', 'UFC', 'Street Fighter', 'Tekken', 'WWE', 'D'),
+                (5, 'I League of Legends finns en champion som heter Nasus, vilken lane kör man honom?', 'Jungle', 'Top lane', 'Mid lane', 'Bot lane', 'B'),
+                (5, 'Hur varvar man klart Minecraft i Survival Mode?', 'Besegra Herobrine', 'Få full Diamond Armor', 'Besegra Witcher', 'Besegra Ender Dragon', 'D'),
+                -- Programmering (Category 6)
+                (6, 'Hur många bitar har datatypen Long?', '32 bitar', '64 bitar', '8 bitar', '128 bitar', 'B'),
+                (6, 'Vilken av följande är inte en giltig datatyp i C#?', 'Integer', 'Decimal', 'String', 'Double', 'A'),
+                (6, 'Vilket språk används som grund för Frontend?', 'XML', 'HTML', 'Java', 'SQL', 'B'),
+                (6, 'Vad kommer följande kod skriva ut?\nint[] numbers = { 1, 2, 3, 4, 5 };\nConsole.WriteLine(numbers[5]);', '5', '0', 'NullReferenceException', 'IndexOutOfRangeException', 'D'),
+                (6, 'Vad betyder NULL i programmering?', 'Tom sträng', 'Felmeddelande', 'Objektreferensfel', 'Inget värde', 'D'),
+                -- Filmer (Category 7)
+                (7, 'Vad heter ringen som Frodo måste förstöra i Sagan om Ringen?', 'The Ring of Power', 'The One Ring', 'The Elven Ring', 'The Dark Ring', 'B'),
+                (7, 'Vilken stad är huvudplatsen för handlingen i filmen Inception?', 'Paris', 'Tokyo', 'Los Angeles', 'New York', 'A'),
+                (7, 'Vad heter huvudkaraktären i filmen Pirates of the Caribbean?', 'Will Turner', 'Hector Barbossa', 'Jack Sparrow', 'Davy Jones', 'C'),
+                (7, 'Vilken regissör är känd för filmer som Pulp Fiction och Kill Bill?', 'Christopher Nolan', 'Martin Scorsese', 'Steven Spielberg', 'Quentin Tarantino', 'D'),
+                (7, 'Vilken animerad Disney-film innehåller låten Let It Go?', 'Moana', 'Tangled', 'Frozen', 'The Little Mermaid', 'C')
                 ON CONFLICT DO NOTHING;
             ";
 
