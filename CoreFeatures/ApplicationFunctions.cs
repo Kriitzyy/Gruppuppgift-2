@@ -1,9 +1,8 @@
 using System;
 using System.Data;
 using Npgsql;
+using QuizApp;
 
-namespace QuizApp
-{
     public static class ApplicationFunctions
     {
         public static void PlayQuiz(int userid)
@@ -78,7 +77,7 @@ namespace QuizApp
                         }
 
                         if (score >= 15) {
-                            
+
                             score = 15;
                             break; 
                             // fortsätter inte med Quizappen, bara om användaren når 15 poäng
@@ -162,4 +161,4 @@ namespace QuizApp
             }
         }
     }
-}
+

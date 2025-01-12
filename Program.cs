@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data;
 using Npgsql;
+using QuizApp;
 
 namespace QuizApp
 {

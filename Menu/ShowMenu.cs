@@ -1,9 +1,7 @@
-// Här sparas Menyer då vi kanske kommer ha många olika/upprepande menyer
-// Och så att det blir strukturerat
 using System;
+using QuizApp;
 
-namespace QuizApp
-{
+
     public static class ShowMenu
     {
         public static void DisplayMenu() //Metod för att visa meny-alternativ.
@@ -44,4 +42,4 @@ namespace QuizApp
         }
 
     }
-}
+

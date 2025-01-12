@@ -1,8 +1,8 @@
 using System;
 using Npgsql;
+using QuizApp;
 
-namespace QuizApp
-{
+
     public static class SignManager // Klass som hanterar inlogg och registrering
     {
         public static void SignUp()
@@ -203,4 +203,4 @@ namespace QuizApp
             }
         }
     }
-}
+

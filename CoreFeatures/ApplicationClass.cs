@@ -1,6 +1,5 @@
 using System; 
-
- namespace QuizApp  {
+using QuizApp;
 
     public class QuizClass { // Quiz class 
         public string Question { get; set; } // Fråga egenskap? 
@@ -14,4 +13,4 @@ using System;
 
         }
     }
- }
+ 
