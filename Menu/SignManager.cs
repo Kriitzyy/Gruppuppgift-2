@@ -1,3 +1,4 @@
+using System;
 using Npgsql;
 
 namespace QuizApp
@@ -38,9 +39,36 @@ namespace QuizApp
                     Console.WriteLine("Username must be at least 3 characters long.");
                     continue;
                 }
+
+                // Check if username already exists
+                using (var connection = DataBaseConnection.GetConnection())
+                {
+                    try
+                    {
+                        connection.Open();
+                        var checkCommand = new NpgsqlCommand(
+                            "SELECT COUNT(*) FROM users WHERE username = @username", 
+                            connection
+                        );
+                        checkCommand.Parameters.AddWithValue("username", username);
+
+                        var result = checkCommand.ExecuteScalar();
+                        if (Convert.ToInt32(result) > 0)
+                        {
+                            Console.WriteLine("Username already exists. Try another one.");
+                            continue;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Error: {ex.Message}");
+                    }
+                }
+
                 break;
             }
 
+            // Insert new user
             using (var connection = DataBaseConnection.GetConnection())
             {
                 try
@@ -120,7 +148,7 @@ namespace QuizApp
                         }
                         else
                         {
-                            Console.WriteLine("\nInvalid credentials. Press Enter to try again.");
+                            Console.WriteLine("\nInvalid credentials. The username does not exist. Press Enter to try again.");
                             Console.ReadLine();
                         }
                     }

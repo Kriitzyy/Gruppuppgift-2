@@ -27,6 +27,12 @@ namespace QuizApp
                 Console.Write("\nSelect a category: ");
                 int categoryId = int.Parse(Console.ReadLine());
 
+                while (!int.TryParse(Console.ReadLine(), out categoryId) || categoryId <= 0) // om användaren matat in fel
+                {
+                    Console.WriteLine("Invalid input. Please enter a valid category number.");
+                    Console.Write("\nSelect a category: ");
+                }
+
                 StartQuiz(userid, categoryId);
             }
         }
@@ -59,10 +65,23 @@ namespace QuizApp
 
                         Console.Write("\nYour answer: ");
                         string answer = Console.ReadLine().ToUpper();
+                        
+                        if (answer != "A" && answer != "B" && answer != "C" && answer != "D")
+                        {
+                            Console.WriteLine("Invalid input! Please enter A, B, C, or D.");
+                            continue; 
+                        }
 
                         if (answer == reader.GetString(5).ToUpper())
                         {
                             score++;
+                        }
+
+                        if (score >= 15) {
+                            
+                            score = 15;
+                            break; 
+                            // fortsätter inte med Quizappen, bara om användaren når 15 poäng
                         }
                     }
                 }

@@ -11,7 +11,7 @@ using System;
         {
             this.Points = Points;
             this.Option = Option;
-            
+
         }
-   }
+    }
  }
