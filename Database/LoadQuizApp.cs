@@ -1,4 +1,4 @@
-using System; 
+using System;
 using Npgsql;
 using QuizApp;
 
@@ -13,7 +13,7 @@ public class LoadQuizapp
                 connection.Open();
                 Console.WriteLine("Connected to the database.");
 
-                // Create Tables
+                // Skapa tabeller
                 string createTables = @"
                 CREATE TABLE IF NOT EXISTS users (
                     id SERIAL PRIMARY KEY,
@@ -42,7 +42,7 @@ public class LoadQuizapp
                     user_id INT REFERENCES users(id),
                     score INT NOT NULL
                 );
-            ";
+                ";
 
                 using (var command = new NpgsqlCommand(createTables, connection))
                 {
@@ -50,7 +50,7 @@ public class LoadQuizapp
                     Console.WriteLine("Tables created successfully.");
                 }
 
-                // Add Unique Constraints (Run Separately)
+                // Lägg till unika constraints
                 string addUniqueConstraints = @"
                 DO $$
                 BEGIN
@@ -70,7 +70,7 @@ public class LoadQuizapp
                         ALTER TABLE questions ADD CONSTRAINT unique_question UNIQUE (category_id, question);
                     END IF;
                 END $$;
-            ";
+                ";
 
                 using (var command = new NpgsqlCommand(addUniqueConstraints, connection))
                 {
@@ -78,18 +78,14 @@ public class LoadQuizapp
                     Console.WriteLine("Unique constraints added successfully.");
                 }
 
-                // Insert Categories
+                // Lägg till kategorier
                 string insertCategories = @"
                 INSERT INTO categories (name) VALUES
-                ('General Knowledge'),
-                ('Science'),
-                ('Math'),
-                ('History'),
                 ('Spel'),
                 ('Programmering'),
                 ('Filmer')
                 ON CONFLICT DO NOTHING;
-            ";
+                ";
 
                 using (var command = new NpgsqlCommand(insertCategories, connection))
                 {
@@ -97,29 +93,26 @@ public class LoadQuizapp
                     Console.WriteLine("Categories inserted successfully.");
                 }
 
-                // Insert Questions
+                // Lägg till frågor
                 string insertQuestions = @"
                 INSERT INTO questions (category_id, question, option_a, option_b, option_c, option_d, correct_option) VALUES
-                -- Spel (Category 5)
-                (5, 'Vilken färg har Mario på sina skor?', 'Svart', 'Grå', 'Brun', 'Blå', 'C'),
-                (5, 'Vilket djur är Sonic?', 'Mus', 'Kanin', 'Katt', 'Igelkott', 'D'),
-                (5, 'Vilket spel är John Cena med i?', 'UFC', 'Street Fighter', 'Tekken', 'WWE', 'D'),
-                (5, 'I League of Legends finns en champion som heter Nasus, vilken lane kör man honom?', 'Jungle', 'Top lane', 'Mid lane', 'Bot lane', 'B'),
-                (5, 'Hur varvar man klart Minecraft i Survival Mode?', 'Besegra Herobrine', 'Få full Diamond Armor', 'Besegra Witcher', 'Besegra Ender Dragon', 'D'),
-                -- Programmering (Category 6)
-                (6, 'Hur många bitar har datatypen Long?', '32 bitar', '64 bitar', '8 bitar', '128 bitar', 'B'),
-                (6, 'Vilken av följande är inte en giltig datatyp i C#?', 'Integer', 'Decimal', 'String', 'Double', 'A'),
-                (6, 'Vilket språk används som grund för Frontend?', 'XML', 'HTML', 'Java', 'SQL', 'B'),
-                (6, 'Vad kommer följande kod skriva ut?\nint[] numbers = { 1, 2, 3, 4, 5 };\nConsole.WriteLine(numbers[5]);', '5', '0', 'NullReferenceException', 'IndexOutOfRangeException', 'D'),
-                (6, 'Vad betyder NULL i programmering?', 'Tom sträng', 'Felmeddelande', 'Objektreferensfel', 'Inget värde', 'D'),
-                -- Filmer (Category 7)
-                (7, 'Vad heter ringen som Frodo måste förstöra i Sagan om Ringen?', 'The Ring of Power', 'The One Ring', 'The Elven Ring', 'The Dark Ring', 'B'),
-                (7, 'Vilken stad är huvudplatsen för handlingen i filmen Inception?', 'Paris', 'Tokyo', 'Los Angeles', 'New York', 'A'),
-                (7, 'Vad heter huvudkaraktären i filmen Pirates of the Caribbean?', 'Will Turner', 'Hector Barbossa', 'Jack Sparrow', 'Davy Jones', 'C'),
-                (7, 'Vilken regissör är känd för filmer som Pulp Fiction och Kill Bill?', 'Christopher Nolan', 'Martin Scorsese', 'Steven Spielberg', 'Quentin Tarantino', 'D'),
-                (7, 'Vilken animerad Disney-film innehåller låten Let It Go?', 'Moana', 'Tangled', 'Frozen', 'The Little Mermaid', 'C')
+                (1, 'Vilken färg har Mario på sina skor?', 'Svart', 'Grå', 'Brun', 'Blå', 'C'),
+                (1, 'Vilket djur är Sonic?', 'Mus', 'Kanin', 'Katt', 'Igelkott', 'D'),
+                (1, 'Vilket spel är John Cena med i?', 'UFC', 'Street Fighter', 'Tekken', 'WWE', 'D'),
+                (1, 'I League of Legends finns en champion som heter Nasus, vilken lane kör man honom?', 'Jungle', 'Top lane', 'Mid lane', 'Bot lane', 'B'),
+                (1, 'Hur varvar man klart Minecraft i Survival Mode?', 'Besegra Herobrine', 'Få full Diamond Armor', 'Besegra Witcher', 'Besegra Ender Dragon', 'D'),
+                (2, 'Hur många bitar har datatypen Long?', '32 bitar', '64 bitar', '8 bitar', '128 bitar', 'B'),
+                (2, 'Vilken av följande är inte en giltig datatyp i C#?', 'Integer', 'Decimal', 'String', 'Double', 'A'),
+                (2, 'Vilket språk används som grund för Frontend?', 'XML', 'HTML', 'Java', 'SQL', 'B'),
+                (2, 'Vad kommer följande kod skriva ut?\nint[] numbers = { 1, 2, 3, 4, 5 };\nConsole.WriteLine(numbers[5]);', '5', '0', 'NullReferenceException', 'IndexOutOfRangeException', 'D'),
+                (2, 'Vad betyder NULL i programmering?', 'Tom sträng', 'Felmeddelande', 'Objektreferensfel', 'Inget värde', 'D'),
+                (3, 'Vad heter ringen som Frodo måste förstöra i Sagan om Ringen?', 'The Ring of Power', 'The One Ring', 'The Elven Ring', 'The Dark Ring', 'B'),
+                (3, 'Vilken stad är huvudplatsen för handlingen i filmen Inception?', 'Paris', 'Tokyo', 'Los Angeles', 'New York', 'A'),
+                (3, 'Vad heter huvudkaraktären i filmen Pirates of the Caribbean?', 'Will Turner', 'Hector Barbossa', 'Jack Sparrow', 'Davy Jones', 'C'),
+                (3, 'Vilken regissör är känd för filmer som Pulp Fiction och Kill Bill?', 'Christopher Nolan', 'Martin Scorsese', 'Steven Spielberg', 'Quentin Tarantino', 'D'),
+                (3, 'Vilken animerad Disney-film innehåller låten Let It Go?', 'Moana', 'Tangled', 'Frozen', 'The Little Mermaid', 'C')
                 ON CONFLICT DO NOTHING;
-            ";
+                ";
 
                 using (var command = new NpgsqlCommand(insertQuestions, connection))
                 {

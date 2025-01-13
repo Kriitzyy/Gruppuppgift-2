@@ -4,11 +4,11 @@ using QuizApp;
 
 public class DataBaseConnection
 {
-    //Sträng för att ansluta till databasen
+    // Sträng för att ansluta till databasen
     private static string connectionString =
-        "Host=localhost;Port=5432;Username=postgres;Password=Mo20042004;Database=quizapps";
-        
-   // Metod som använder NpgsqlConnection-klassen som returtyp. NpgsqlConnection hanterar anslutningar till en PostgreSQL-server.
+        "Host=localhost;Port=5432;Username=postgres;Password=123;Database=quizapp";
+
+    // Skapar och returnerar en ny anslutning till PostgreSQL-databasen
     public static NpgsqlConnection GetConnection()
     {
         try
@@ -17,7 +17,7 @@ public class DataBaseConnection
         }
         catch (Exception ex)
         {
-            throw new Exception("Fel vid skapande av databasanslutning" + ex.Message);
+            throw new Exception("Fel vid skapande av databasanslutning: " + ex.Message);
         }
     }
 }

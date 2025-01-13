@@ -1,27 +1,31 @@
 using System;
 using QuizApp;
 
-
-    public static class ShowMenu
+public static class ShowMenu
+{
+    // Metod för att visa meny-alternativ
+    public static void DisplayMenu()
     {
-        public static void DisplayMenu() //Metod för att visa meny-alternativ.
-        {
-            ShowHomePage();
-            Console.WriteLine("\n[1] - Sign up");
-            Console.WriteLine("[2] - Sign in");
-            Console.WriteLine("[3] - Exit");
+        ShowHomePage();
+        Console.WriteLine("\n[1] - Sign up");
+        Console.WriteLine("[2] - Sign in");
+        Console.WriteLine("[3] - Exit");
+        Console.Write("\nSelect an option: ");
+    }
 
-            Console.Write("\nSelect an option: ");
-        }
-        static void center(string message) //Metod för att justera 'Quiz-App' logo position.
+    // Justerar textens position till mitten
+    private static void Center(string message)
     {
         int screenWidth = Console.WindowWidth;
         int stringWidth = message.Length;
         int spaces = (screenWidth / 2) + (stringWidth / 2);
         Console.WriteLine(message.PadLeft(spaces));
     }
-        public static void ShowHomePage() { //Metod för att visa Quiz-App logo och text.
-             Console.WriteLine(@"   
+
+    // Visar Quiz-App-logga och introduktionstext
+    public static void ShowHomePage()
+    {
+        Console.WriteLine(@"   
                                                     ============================================================================================  
                                                     =                                                                                          =
                                                     =    ████████▄   ███    █▄   ▄█   ▄███████▄          ▄████████    ▄███████▄    ▄███████▄   =
@@ -35,11 +39,9 @@ using QuizApp;
                                                     =                                                                                          =
                                                     ============================================================================================                               
    ");
-        center("🎮 WELCOME TO THE QUIZ APP 🎮\n");
-        center("Think you're the ultimate brainiac? Or maybe you’re just here to prove you're smarter than your friends?");
-        center("Either way, welcome to the *Quiz App*—where knowledge is your weapon, and trivia mastery is your ultimate flex! 🧠⚔️");
-        center("💡 **Ready to show the world who's boss? Let’s go!**");
-        }
-
+        Center("🎮 WELCOME TO THE QUIZ APP 🎮\n");
+        Center("Think you're the ultimate brainiac? Or maybe you’re just here to prove you're smarter than your friends?");
+        Center("Either way, welcome to the *Quiz App*—where knowledge is your weapon, and trivia mastery is your ultimate flex! 🧠⚔️");
+        Center("💡 **Ready to show the world who's boss? Let’s go!**");
     }
-
+}
