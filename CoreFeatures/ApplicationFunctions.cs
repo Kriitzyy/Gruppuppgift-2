@@ -105,11 +105,21 @@ public static class ApplicationFunctions
                         }
                     }
 
-                    if (answer == reader.GetString(5).ToUpper() && score <= 15)
+                    if (answer == reader.GetString(5).ToUpper())
                     {
                         score++;
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.WriteLine("Correct!");
                     }
-                    Console.Clear();
+                    else
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("Wrong!");
+                    }
+                    Console.ResetColor(); //Återställen färgen av texten.
+                    Thread.Sleep(1700); // Vänta så användaren ser resultatet
+                    Console.Clear(); // Rensa konsolen
+                    Console.ResetColor();
                 }
             }
 

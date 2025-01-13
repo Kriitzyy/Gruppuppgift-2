@@ -6,7 +6,7 @@ public class DataBaseConnection
 {
     // Sträng för att ansluta till databasen
     private static string connectionString =
-        "Host=localhost;Port=5432;Username=postgres;Password=123;Database=quizapp";
+        "Host=localhost;Port=5432;Username=postgres;Password=password;Database=quizapp";
 
     // Skapar och returnerar en ny anslutning till PostgreSQL-databasen
     public static NpgsqlConnection GetConnection()
