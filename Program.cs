@@ -9,7 +9,7 @@ namespace QuizApp
     {
         static void Main(string[] args)
         {
-            Console.BackgroundColor = ConsoleColor.Cyan;
+            Console.BackgroundColor = ConsoleColor.DarkBlue;
             Console.ForegroundColor = ConsoleColor.Black;
             LoadQuizapp.SetUpDatabase();
             bool StillGoing = true;
